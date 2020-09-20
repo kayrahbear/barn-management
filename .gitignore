@@ -126,6 +126,7 @@ env.bak/
 venv.bak/
 django_bm/
 keys/
+django_cr/
 .vscode
 
 # Spyder project settings
