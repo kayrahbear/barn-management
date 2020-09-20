@@ -11,11 +11,11 @@ import environ
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-env_file = os.path.join(BASE_DIR,  ".env")
+env_file = os.path.join(BASE_DIR, ".env")
 
 SETTINGS_NAME = "application_settings"
 
-if not os.path.isfile('.env'):
+if not os.path.isfile(".env"):
     import google.auth
     from google.cloud import secretmanager_v1beta1 as sm
 
@@ -44,9 +44,9 @@ DEBUG = env("DEBUG")
 # Setting this value from django-environ
 DATABASES = {"default": env.db()}
 
-INSTALLED_APPS += ["storages"] # for django-storages
+INSTALLED_APPS += ["storages"]  # for django-storages
 if "bm_back" not in INSTALLED_APPS:
-   INSTALLED_APPS += ["bm_back"] # for custom data migration
+    INSTALLED_APPS += ["bm_back"]  # for custom data migration
 
 # Define static storage via django-storages[google]
 GS_BUCKET_NAME = env("GS_BUCKET_NAME")
