@@ -14,6 +14,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 env_file = os.path.join(BASE_DIR, ".env")
 
 SETTINGS_NAME = "application_settings"
+AUTH_USER_MODEL = 'backoffice.User'
 
 if not os.path.isfile(".env"):
     import google.auth

@@ -3,25 +3,26 @@ from django.core.files import File
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.db import models
-from backoffice.UserManager import UserManager
+from .UserManager import UserManager
 from django.contrib.auth.hashers import get_hasher, identify_hasher
 import uuid
 
 
 class User(AbstractBaseUser, PermissionsMixin):
     user_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user_img = models.ImageField(upload_to="media/%Y/%m/%d",null=True, blank=True)
     email = models.EmailField(
         unique=True,
     )
     first_name = models.CharField(max_length=100, null=True, blank=True)
-    last_name = models.CharField(max_length=100, null=True, blank=True)
+    last_name = models.CharField(max_length=100, null=True, blank =True)
     facebookId = models.CharField(
         max_length=100,
         null=True,
         blank=True,
     )
     android = models.BooleanField(blank=True, default=False)
-    ios = models.NullBooleanField(blank=True, default=False, null=True)
+    ios = models.NullBooleanField(blank=True, default=False)
     acceptPush = models.BooleanField(default=False)
     pushToken = models.CharField(
         max_length=100,
@@ -42,6 +43,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class Horse(models.Model):
     horse_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    horse_img = models.ImageField(upload_to="media/%Y/%m/%d",null=True, blank=True)
     short_name = models.CharField(
         max_length=100,
     )
@@ -78,11 +80,10 @@ class Horse(models.Model):
 class Lesson(models.Model):
     lesson_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     horse_id = models.ForeignKey(Horse, on_delete=models.CASCADE)
-    trainer_id = models.ForeignKey(User, on_delete=models.CASCADE)
     rider_id = models.ForeignKey(User, on_delete=models.CASCADE)
     lesson_time = models.DateTimeField()
     requested_date = models.DateTimeField()
-    approved = models.BooleanField()
+    approved = models.BooleanField(default=False)
     lesson_length = models.FloatField(null=True)
 
     class Meta:

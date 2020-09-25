@@ -13,7 +13,8 @@ def createsuperuser(apps, schema_editor):
     admin_password = client.access_secret_version(path).payload.data.decode("UTF-8")
 
     # Create a new user using acquired password
-    from django.contrib.auth.models import User
+    from django.contrib.auth import get_user_model
+    User = get_user_model()
 
     User.objects.create_superuser("admin", password=admin_password)
 

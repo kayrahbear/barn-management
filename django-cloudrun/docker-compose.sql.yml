@@ -1,7 +1,7 @@
 # docker-compose.sql.yml
 #
 # Usage: 
-#   export GCP_KEY_PATH=~/keys/project-sql-key.json 
+#   export GCP_KEY_PATH=~/keys/keyfile.json 
 #   export CLOUDSQL_CONNECTION_NAME=project-name:region:instance-name
 #   export CLOUDSQL_USER=root
 #   export CLOUDSQL_PASSWORD=""
@@ -27,8 +27,8 @@ services:
    image: gcr.io/cloudsql-docker/gce-proxy:1.16
    command:
      - "/cloud_sql_proxy"
-     - "-dir=/cloudsql"
-     - "-instances=${CLOUDSQL_CONNECTION_NAME}"
+     - "-p 127.0.0.1:3306:3306"
+     - "-instances=${CLOUDSQL_CONNECTION_NAME}=tcp:0.0.0.0:3306"
      - "-credential_file=/root/keys/keyfile.json"
    volumes:
      - ${GCP_KEY_PATH}:/root/keys/keyfile.json:ro
