@@ -1,0 +1,7 @@
+{
+  "name": "bmFront",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
