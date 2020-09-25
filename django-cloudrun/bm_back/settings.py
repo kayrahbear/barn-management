@@ -2,7 +2,7 @@
 from .basesettings import *
 
 try:
-    from .local import *
+    from .local import LOCAL_DATABASE
 except ImportError:
     pass
 
@@ -43,11 +43,14 @@ ALLOWED_HOSTS = ["*"]
 DEBUG = env("DEBUG")
 
 # Setting this value from django-environ
-DATABASES = {"default": env.db()}
+try:
+    DATABASES = LOCAL_DATABASE
+except NameError:
+    DATABASES = {"default": env.db()}
 
 INSTALLED_APPS += ["storages"]  # for django-storages
 if "bm_back" not in INSTALLED_APPS:
-    INSTALLED_APPS += ["bm_back"]  # for custom data migration
+    INSTALLED_APPS += ["bm_back"]  # for custom data migrationclear
 
 # Define static storage via django-storages[google]
 GS_BUCKET_NAME = env("GS_BUCKET_NAME")
