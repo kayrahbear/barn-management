@@ -24,7 +24,6 @@ router = DefaultRouter()
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('grappelli/', include('grappelli.urls')), # grappelli URLS  # grappelli
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
