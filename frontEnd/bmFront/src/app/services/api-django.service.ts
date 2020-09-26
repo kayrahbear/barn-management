@@ -4,12 +4,18 @@ import { Storage } from '@ionic/storage';
 import { Observable } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import {oAuth2ClientId, oAuth2ClientSecret, oAuth2Username, oAuth2Password, getOauthUrl, getUserUrl} from './var';
+import { AlertController ,LoadingController} from '@ionic/angular';
+@Injectable({
+  providedIn: 'root'
+})
+
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class ApiDjangoService {
+  loader:any;
   tokenSSO: String = "";
   expireDate: any;
   networkConnected: boolean = true;
@@ -24,8 +30,10 @@ export class ApiDjangoService {
   getUserUrl = getUserUrl;
 
   constructor(public http: HttpClient,
+    public loadingController: LoadingController,
+    public alertCtrl: AlertController,
     public storage: Storage) {
-  }
+  } 
 
   getExpireDate() {
     return Observable.create(observer => {
@@ -135,5 +143,70 @@ export class ApiDjangoService {
           console.log(error);// Error getting the data
         });
     });
+  }
+  findUser(path){
+    const options = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + this.tokenSSO,
+        'Content-Type': 'application/json'
+      })
+    }; 
+    let url = this.getUserUrl+path;
+    return Observable.create(observer => {
+      // At this point make a request to your backend to make a real check!
+      console.log("CHECKING BACKEND: " + url);
+      this.http.get(url, options)
+        .pipe(retry(1))
+        .subscribe(res => {
+          observer.next(res);
+          observer.complete();
+        }, error => {
+          observer.next();
+          observer.complete();
+          console.log(error);// Error getting the data
+        });
+    });
+  }
+  async showLoading() { 
+    this.loader = await this.loadingController.create({
+      message:  'Please wait',
+      duration: 4000
+    });
+    return await this.loader.present(); 
+  }
+   public async showLoadingMessage(message) {
+    this.loader = await this.loadingController.create({
+      message: message,
+    });
+    this.loader.present();
+  }
+  async stopLoading() { 
+    if (this.loader){
+      this.loader.dismiss()
+    } 
+  }
+  async showNoNetwork() {
+    let alert = await this.alertCtrl.create({
+      header: 'Sorry',
+      message: 'No network detected. Please check your internet connexion',
+      buttons: ['OK']
+    }); 
+    return await alert.present(); 
+  }
+  async showError(text) {
+    let alert = await this.alertCtrl.create({
+      header: 'Error',
+      message: text,
+      buttons: ['OK']
+    });
+    return await alert.present();
+  }
+  async showMessage(title, message) {
+    let alert = await this.alertCtrl.create({
+      header: title,
+      message: message,
+      buttons: ['OK']
+    });
+    return await alert.present();
   }
 } 
