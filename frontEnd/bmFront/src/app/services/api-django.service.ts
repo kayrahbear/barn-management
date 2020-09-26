@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Storage } from '@ionic/storage';
 import { Observable } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
+import {oAuth2ClientId, oAuth2ClientSecret, oAuth2Username, oAuth2Password, getOauthUrl, getUserUrl} from './var';
 
 @Injectable({
   providedIn: 'root'
@@ -13,14 +14,14 @@ export class ApiDjangoService {
   expireDate: any;
   networkConnected: boolean = true;
   virtualHostName: string = ''
-  oAuth2ClientId: string = 'luuYGRfW15maKtKeZFfjVgNLSa2G7pEWic9Fw29c';
-  oAuth2ClientSecret: string = 'OC85CZTUIRmYINqiHdLLEzY4fiqz1g9VbpVPA92LSWOCDQwKnrWCruYNY0dLbH26iSnxTX045XLpGcQB0byumiRuEh9Xndph0w1V7dATCrmTnP13g9kcDcRfVMFSSklE';
-  oAuth2Username: string = 'admin@admin.com'; // Set your oAuth2 username
-  oAuth2Password: string = 'PEtGkT4AqqAafmuOXiRf5zuuKFhK8s'; // Set your oAuth2 password
+  oAuth2ClientId = oAuth2ClientId;
+  oAuth2ClientSecret = oAuth2ClientSecret;
+  oAuth2Username = oAuth2Username; 
+  oAuth2Password = oAuth2Password;
   appName: string = 'bm_back';
-  apiPrefix = "/api"
-  getOauthUrl = "https://bm-back-hvrl7rzdpq-uc.a.run.app/o/token/";
-  getUserUrl = "https://bm-back-hvrl7rzdpq-uc.a.run.app/api/users/"
+  apiPrefix = "/api";
+  getOauthUrl = getOauthUrl;
+  getUserUrl = getUserUrl;
 
   constructor(public http: HttpClient,
     public storage: Storage) {
