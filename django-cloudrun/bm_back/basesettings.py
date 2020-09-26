@@ -34,7 +34,6 @@ INSTALLED_APPS = [
     "backoffice.apps.BackofficeConfig",
     "grappelli",
     "rest_framework",
-    'rest_framework_docs',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -103,18 +102,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-#Rest
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-       'rest_framework.authentication.BasicAuthentication',
-    ),
-    'DEFAULT_RENDERER_CLASSES': (
-        'rest_framework.renderers.JSONRenderer',
-        'rest_framework.renderers.BrowsableAPIRenderer',
-    ),
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 20, 
-}
+
 
 
 # Internationalization
