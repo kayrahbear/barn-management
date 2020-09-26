@@ -23,8 +23,8 @@ from rest_framework.routers import DefaultRouter
 router = DefaultRouter()
 
 urlpatterns = [
-    path('', include(router.urls)),
-    path('admin/', admin.site.urls),
-    path('api/', include('api.urls')),
-    path('o/', include('oauth2_provider.urls',  namespace='oauth2_provider')),
-]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    path("", include(router.urls)),
+    path("admin/", admin.site.urls),
+    path("api/", include("api.urls")),
+    path("o/", include("oauth2_provider.urls", namespace="oauth2_provider")),
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

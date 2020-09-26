@@ -10,12 +10,12 @@ import uuid
 
 class User(AbstractBaseUser, PermissionsMixin):
     user_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    user_img = models.ImageField(upload_to="media/%Y/%m/%d",null=True, blank=True)
+    user_img = models.ImageField(upload_to="media/%Y/%m/%d", null=True, blank=True)
     email = models.EmailField(
         unique=True,
     )
     first_name = models.CharField(max_length=100, null=True, blank=True)
-    last_name = models.CharField(max_length=100, null=True, blank =True)
+    last_name = models.CharField(max_length=100, null=True, blank=True)
     facebookId = models.CharField(
         max_length=100,
         null=True,
@@ -43,7 +43,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class Horse(models.Model):
     horse_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    horse_img = models.ImageField(upload_to="media/%Y/%m/%d",null=True, blank=True)
+    horse_img = models.ImageField(upload_to="media/%Y/%m/%d", null=True, blank=True)
     short_name = models.CharField(
         max_length=100,
     )

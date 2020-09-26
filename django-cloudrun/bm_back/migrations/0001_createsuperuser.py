@@ -14,6 +14,7 @@ def createsuperuser(apps, schema_editor):
 
     # Create a new user using acquired password
     from django.contrib.auth import get_user_model
+
     User = get_user_model()
 
     User.objects.create_superuser("admin", password=admin_password)
