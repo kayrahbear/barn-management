@@ -127,7 +127,6 @@ venv.bak/
 django_bm/
 keys/
 django_cr/
-django-cloudrun/bm_back/local.py
 .vscode
 
 # Spyder project settings
