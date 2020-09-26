@@ -16,8 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import include
+from django.conf import settings
+from django.conf.urls.static import static
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter()
 
 urlpatterns = [
-    path('grappelli/', include('grappelli.urls')), # grappelli URLS
-    path('admin/', admin.site.urls), # admin site
-]
+    path("", include(router.urls)),
+    path("admin/", admin.site.urls),
+    path("api/", include("api.urls")),
+    path("o/", include("oauth2_provider.urls", namespace="oauth2_provider")),
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

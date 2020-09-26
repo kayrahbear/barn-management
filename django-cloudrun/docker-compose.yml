@@ -4,13 +4,12 @@ version: '3'
 services:
  app:
    build: .
-   image: gcr.io/barn-management-290023/django-cloudrun@sha256:c7fcb96dd1d6394a8da82f46651e09ef7936995e22b2081d4a34741f6de99fb4
+   image: gcr.io/barn-management-290023/bm-back:latest
    ports:
      # Service will be accessible on the host at port 9090.
      - "9090:${PORT:-8080}"
    environment:
      # /run/docs/reference/container-contract
      PORT: ${PORT:-8080}
-     K_SERVICE: django-cloudrun
-     K_REVISION: django-cloudrun-00001-ruq 
-     K_CONFIGURATION: django-cloudrun 
+     K_SERVICE: bm-back 
+     K_CONFIGURATION: bm-back 
