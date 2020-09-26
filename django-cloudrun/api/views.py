@@ -1,9 +1,9 @@
 # *coding: utf-8*
 from backoffice.models import User, Horse, Lesson
 from api.serializers import UserSerializer, HorseSerializer, LessonSerializer
-from rest_framework import generics
+from rest_framework import generics, permissions
 from django_filters.rest_framework import DjangoFilterBackend
-
+from oauth2_provider.contrib.rest_framework import TokenHasReadWriteScope, TokenHasScope
 
 class UserCreateOrView(generics.ListCreateAPIView):
     """
@@ -14,6 +14,7 @@ class UserCreateOrView(generics.ListCreateAPIView):
             You can search using:
                 :param email
     """
+    permission_classes = [permissions.IsAuthenticated, TokenHasReadWriteScope]
     queryset = User.objects.all()
     serializer_class = UserSerializer
     filter_backends = (DjangoFilterBackend,)
@@ -30,6 +31,7 @@ class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
             put:
                 Update a user.
     """
+    permission_classes = [permissions.IsAuthenticated, TokenHasReadWriteScope]
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
@@ -44,6 +46,7 @@ class HorseCreateOrView(generics.ListCreateAPIView):
                     :param show_name
                     :param lesson_horse
     """
+    permission_classes = [permissions.IsAuthenticated, TokenHasReadWriteScope]
     queryset = Horse.objects.all()
     serializer_class = HorseSerializer
     filter_backends = (DjangoFilterBackend,)
@@ -56,5 +59,6 @@ class LessonCreateOrView(generics.ListCreateAPIView):
             get:
                 Search or get lessons
     """
+    permission_classes = [permissions.IsAuthenticated, TokenHasReadWriteScope]
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
