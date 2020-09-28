@@ -128,6 +128,7 @@ django_bm/
 keys/
 django_cr/
 .vscode
+var.ts
 
 # Spyder project settings
 .spyderproject
