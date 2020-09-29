@@ -21,8 +21,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         null=True,
         blank=True,
     )
-    android = models.BooleanField(blank=True, default=False)
-    ios = models.NullBooleanField(blank=True, default=False)
+    android = models.BooleanField(default=False)
+    ios = models.BooleanField(default=False)
     acceptPush = models.BooleanField(default=False)
     pushToken = models.CharField(
         max_length=100,
