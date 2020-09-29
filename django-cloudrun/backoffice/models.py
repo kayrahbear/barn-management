@@ -14,8 +14,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(
         unique=True,
     )
-    first_name = models.CharField(max_length=100, null=True, blank=True)
-    last_name = models.CharField(max_length=100, null=True, blank=True)
+    first_name = models.CharField(max_length=15, null=True, blank=True)
+    last_name = models.CharField(max_length=15, null=True, blank=True)
     facebookId = models.CharField(
         max_length=100,
         null=True,
@@ -40,20 +40,55 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name = "User"
         verbose_name_plural = "Users"
 
+class Group(models.Model):
+    group_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    group_name = models.CharField(
+        max_length=20,
+        null=True,
+        blank=True,
+    )
+    group_type = models.CharField(
+        max_length=8,
+        null=True,
+        blank=True,
+    )
+
+    class Meta:
+        verbose_name = "Group"
+        verbose_name_plural = "Groups"
+
+class GroupMember(models.Model):
+    member_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    group_id = models.ForeignKey(Group, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = "GroupMember"
+        verbose_name_plural = "GroupMembers"
+
+class Trainer(models.Model):
+    trainer_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    group_id = models.ForeignKey(Group, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = "Trainer"
+        verbose_name_plural = "Trainers"
+
 
 class Horse(models.Model):
     horse_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    stall_identifier = models.CharField(max_length=10,null=True, blank=True)
     horse_img = models.ImageField(upload_to="media/%Y/%m/%d", null=True, blank=True)
     short_name = models.CharField(
-        max_length=100,
+        max_length=15,
     )
     show_name = models.CharField(
-        max_length=100,
+        max_length=25,
         null=True,
         blank=True,
     )
     breed = models.CharField(
-        max_length=100,
+        max_length=25,
         null=True,
         blank=True,
     )
@@ -62,15 +97,15 @@ class Horse(models.Model):
         null=True,
         blank=True,
     )
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     sex = models.CharField(
-        max_length=4,
+        max_length=8,
         null=True,
         blank=True,
     )
     lesson_horse = models.BooleanField(default=True)
     show_horse = models.BooleanField(default=True)
-    stall_number = models.IntegerField(blank=True)
+    
 
     class Meta:
         verbose_name = "Horse"
@@ -81,11 +116,70 @@ class Lesson(models.Model):
     lesson_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     horse_id = models.ForeignKey(Horse, on_delete=models.CASCADE)
     rider_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    trainer_id = models.ForeignKey(Trainer, on_delete=models.CASCADE)
     lesson_time = models.DateTimeField()
     requested_date = models.DateTimeField()
     approved = models.BooleanField(default=False)
-    lesson_length = models.FloatField(null=True)
+    lesson_length = models.FloatField(null=True, blank=True)
 
     class Meta:
         verbose_name = "Lesson"
         verbose_name_plural = "Lessons"
+
+class Turnout(models.Model):
+    turnout_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    horse_id = models.ForeignKey(Horse, on_delete=models.CASCADE)
+    turnout_time = models.models.CharField(
+        max_length=2,
+        null=True,
+        blank=True,
+    )
+    weekday = models.models.CharField(
+        max_length=8,
+        null=True,
+        blank=True,
+    )
+
+    class Meta:
+        verbose_name = "Turnout"
+        verbose_name_plural = "Turnouts"
+
+class SuppsMeds(models.Model):
+    supp_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    supp_name = models.models.CharField(
+        max_length=8,
+        null=True,
+        blank=True,
+    )
+    amount = models.models.CharField(
+        max_length=20,
+        null=True,
+        blank=True,
+    )
+
+    class Meta:
+        verbose_name = "Supplement/Medication"
+        verbose_name_plural = "Supplements/Medications"
+
+class Feed(models.Model):
+    feed_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    horse_id = models.ForeignKey(Horse, on_delete=models.CASCADE)
+    feed_time = models.models.CharField(
+        max_length=2,
+    )
+    grain = models.models.CharField(
+        max_length=8,
+        null=True,
+        blank=True,
+    )
+    grain_amount = models.FloatField(null=True, blank=True)
+    supp_id = models.ForeignKey(Horse, on_delete=models.CASCADE)
+    grain = models.models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+    )
+
+    class Meta:
+        verbose_name = "Feed"
+        verbose_name_plural = "Feeds"
