@@ -129,12 +129,12 @@ class Lesson(models.Model):
 class Turnout(models.Model):
     turnout_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     horse_id = models.ForeignKey(Horse, on_delete=models.CASCADE)
-    turnout_time = models.models.CharField(
+    turnout_time = models.CharField(
         max_length=2,
         null=True,
         blank=True,
     )
-    weekday = models.models.CharField(
+    weekday = models.CharField(
         max_length=8,
         null=True,
         blank=True,
@@ -146,12 +146,12 @@ class Turnout(models.Model):
 
 class SuppsMeds(models.Model):
     supp_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    supp_name = models.models.CharField(
+    supp_name = models.CharField(
         max_length=8,
         null=True,
         blank=True,
     )
-    amount = models.models.CharField(
+    amount = models.CharField(
         max_length=20,
         null=True,
         blank=True,
@@ -164,17 +164,17 @@ class SuppsMeds(models.Model):
 class Feed(models.Model):
     feed_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     horse_id = models.ForeignKey(Horse, on_delete=models.CASCADE)
-    feed_time = models.models.CharField(
+    feed_time = models.CharField(
         max_length=2,
     )
-    grain = models.models.CharField(
+    grain = models.CharField(
         max_length=8,
         null=True,
         blank=True,
     )
     grain_amount = models.FloatField(null=True, blank=True)
-    supp_id = models.ForeignKey(Horse, on_delete=models.CASCADE)
-    grain = models.models.CharField(
+    supp_id = models.ForeignKey(SuppsMeds, on_delete=models.CASCADE)
+    grain = models.CharField(
         max_length=100,
         null=True,
         blank=True,
