@@ -2,7 +2,7 @@
 from .basesettings import *
 
 try:
-    from .local import LOCAL_DATABASE
+    from .local_settings import LOCAL_DATABASE
 except ImportError:
     pass
 
@@ -15,6 +15,11 @@ env_file = os.path.join(BASE_DIR, ".env")
 
 SETTINGS_NAME = "application_settings"
 AUTH_USER_MODEL = "backoffice.User"
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'backoffice.customAuthentification.customAuthentification',
+)
 
 if not os.path.isfile(".env"):
     import google.auth
