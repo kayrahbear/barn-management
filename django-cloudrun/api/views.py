@@ -17,6 +17,7 @@ class UserViewSet(viewsets.ModelViewSet):
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = ("email",)
 
+
 class GroupViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, TokenHasReadWriteScope]
     queryset = Group.objects.all()
@@ -24,12 +25,17 @@ class GroupViewSet(viewsets.ModelViewSet):
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = ("group_name",)
 
+
 class GroupMemberViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, TokenHasReadWriteScope]
     queryset = GroupMember.objects.all()
     serializer_class = GroupMemberSerializer
     filter_backends = (DjangoFilterBackend,)
-    filterset_fields = ("email", "group_name",)
+    filterset_fields = (
+        "email",
+        "group_name",
+    )
+
 
 class TrainerViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, TokenHasReadWriteScope]
@@ -37,6 +43,7 @@ class TrainerViewSet(viewsets.ModelViewSet):
     serializer_class = TrainerSerializer
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = ("email",)
+
 
 class HorseViewSet(viewsets.ModelViewSet):
 
@@ -53,4 +60,10 @@ class LessonViewSet(viewsets.ModelViewSet):
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
     filter_backends = (DjangoFilterBackend,)
-    filterset_fields = ("horse_id", "rider_id", "trainer_id", "lesson_time", "approved",)
+    filterset_fields = (
+        "horse_id",
+        "rider_id",
+        "trainer_id",
+        "lesson_time",
+        "approved",
+    )

@@ -40,6 +40,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name = "User"
         verbose_name_plural = "Users"
 
+
 class Group(models.Model):
     group_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     group_name = models.CharField(
@@ -57,6 +58,7 @@ class Group(models.Model):
         verbose_name = "Group"
         verbose_name_plural = "Groups"
 
+
 class GroupMember(models.Model):
     member_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     group_id = models.ForeignKey(Group, on_delete=models.CASCADE)
@@ -65,6 +67,7 @@ class GroupMember(models.Model):
     class Meta:
         verbose_name = "GroupMember"
         verbose_name_plural = "GroupMembers"
+
 
 class Trainer(models.Model):
     trainer_id = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -77,7 +80,7 @@ class Trainer(models.Model):
 
 class Horse(models.Model):
     horse_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    stall_identifier = models.CharField(max_length=10,null=True, blank=True)
+    stall_identifier = models.CharField(max_length=10, null=True, blank=True)
     horse_img = models.ImageField(upload_to="media/%Y/%m/%d", null=True, blank=True)
     short_name = models.CharField(
         max_length=15,
@@ -105,7 +108,6 @@ class Horse(models.Model):
     )
     lesson_horse = models.BooleanField(default=True)
     show_horse = models.BooleanField(default=True)
-    
 
     class Meta:
         verbose_name = "Horse"
@@ -126,6 +128,7 @@ class Lesson(models.Model):
         verbose_name = "Lesson"
         verbose_name_plural = "Lessons"
 
+
 class Turnout(models.Model):
     turnout_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     horse_id = models.ForeignKey(Horse, on_delete=models.CASCADE)
@@ -144,6 +147,7 @@ class Turnout(models.Model):
         verbose_name = "Turnout"
         verbose_name_plural = "Turnouts"
 
+
 class SuppsMeds(models.Model):
     supp_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     supp_name = models.CharField(
@@ -160,6 +164,7 @@ class SuppsMeds(models.Model):
     class Meta:
         verbose_name = "Supplement/Medication"
         verbose_name_plural = "Supplements/Medications"
+
 
 class Feed(models.Model):
     feed_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

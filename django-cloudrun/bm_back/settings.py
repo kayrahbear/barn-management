@@ -17,8 +17,8 @@ SETTINGS_NAME = "application_settings"
 AUTH_USER_MODEL = "backoffice.User"
 
 AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
-    'backoffice.customAuthentification.customAuthentification',
+    "django.contrib.auth.backends.ModelBackend",
+    "backoffice.customAuthentification.customAuthentification",
 )
 
 if not os.path.isfile(".env"):
