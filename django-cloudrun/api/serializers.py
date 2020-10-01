@@ -22,12 +22,10 @@ class TrainerSerializer(serializers.ModelSerializer):
         model = Trainer
         fields = "__all__"
 
-
 class HorseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Horse
         fields = "__all__"
-
 
 class LessonSerializer(serializers.ModelSerializer):
     class Meta:
