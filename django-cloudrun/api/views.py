@@ -15,7 +15,7 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     filter_backends = (DjangoFilterBackend,)
-    filterset_fields = ("email",)
+    filterset_fields = ("email", "password")
 
 
 class GroupViewSet(viewsets.ModelViewSet):

@@ -1,9 +1,10 @@
+from django.contrib.auth.backends import BaseBackend
 from django.contrib.auth.models import User
 from .libs.hashers import *
 from .models import User
 
 
-class customAuthentification(object):
+class customAuthentification(BaseBackend):
     """
     Use the login name and a hash of the password. For example:
     """

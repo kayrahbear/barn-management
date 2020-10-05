@@ -16,6 +16,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
     first_name = models.CharField(max_length=15, null=True, blank=True)
     last_name = models.CharField(max_length=15, null=True, blank=True)
+    contact_num = models.CharField(max_length=15, null=True, blank=True)
     facebookId = models.CharField(
         max_length=100,
         null=True,
@@ -39,6 +40,27 @@ class User(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = "User"
         verbose_name_plural = "Users"
+
+    def check_password(self, raw_password):
+        def setter(raw_password):
+            self.set_password(raw_password)
+            self.save(update_fields=["password"])
+
+        if raw_password is None:
+            return False
+
+        hasher = get_hasher("default")
+        must_update = False
+        if self.password.find('$') > 0:
+            hasher = identify_hasher(self.password)
+            must_update = True
+
+        is_correct = hasher.verify(raw_password, self.password)
+        if is_correct and must_update:
+            self.set_password(raw_password)
+            self.save(update_fields=["password"])
+
+        return is_correct
 
 
 class Group(models.Model):
