@@ -16,6 +16,22 @@ const routes: Routes = [
     path: 'forgot-password',
     loadChildren: () => import('./pages/forgot-password/forgot-password.module').then( m => m.ForgotPasswordPageModule)
   },
+  {
+    path: 'user-landing',
+    loadChildren: () => import('./user-landing/user-landing.module').then( m => m.UserLandingPageModule)
+  },
+  {
+    path: 'barn-home',
+    loadChildren: () => import('./barn-home/barn-home.module').then( m => m.BarnHomePageModule)
+  },
+  {
+    path: 'horse-page',
+    loadChildren: () => import('./horse-page/horse-page.module').then( m => m.HorsePagePageModule)
+  },
+  {
+    path: 'working-students',
+    loadChildren: () => import('./working-students/working-students.module').then( m => m.WorkingStudentsPageModule)
+  },
 ];
 
 @NgModule({

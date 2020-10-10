@@ -27,7 +27,7 @@ export class AppComponent {
     this.initializeApp();
   }
   accessAuthorizedWithUrl() {
-    this.router.navigateByUrl("/login-page")
+    this.router.navigateByUrl("/login")
   }
   getToken() {
     console.log("Didn't find a token, friend ")

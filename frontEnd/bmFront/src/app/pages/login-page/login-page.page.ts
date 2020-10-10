@@ -20,7 +20,7 @@ export class LoginPagePage implements OnInit {
     if (this.apiService.networkConnected) {
       this.apiService.showLoading();
       let password = CryptoJS.SHA256(this.registerCredentials.password).toString(CryptoJS.enc.Hex);
-      let queryPath = "?email=" + this.registerCredentials.email + "&password=" + password;
+      let queryPath = "?email=" + this.registerCredentials.email;
       this.apiService.findUser(queryPath).subscribe((listUsers) => {
         if (listUsers) {
           console.log("Find " + JSON.stringify(listUsers));

@@ -130,7 +130,6 @@ export class ApiDjangoService {
     };
    let url = this.getUserUrl
     return Observable.create(observer => {
-      // At this point make a request to your backend to make a real check!
       console.log("Getting user list from: " + url);
       this.http.get(url, options)
         .pipe(retry(1))
@@ -153,9 +152,31 @@ export class ApiDjangoService {
     }; 
     let url = this.getUserUrl+path;
     return Observable.create(observer => {
-      // At this point make a request to your backend to make a real check!
       console.log("CHECKING BACKEND: " + url);
       this.http.get(url, options)
+        .pipe(retry(1))
+        .subscribe(res => {
+          observer.next(res);
+          observer.complete();
+        }, error => {
+          observer.next();
+          observer.complete();
+          console.log(error);// Error getting the data
+        });
+    });
+  }
+  createUser(user){ 
+    const options = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + this.tokenSSO,
+        'Content-Type': 'application/json'
+      })
+    }; 
+    let url = this.getUserUrl;
+    return Observable.create(observer => {
+      // At this point make a request to your backend 
+      console.log("on appelle BACKEND encoded url " + url);
+      this.http.post(url, user, options)
         .pipe(retry(1))
         .subscribe(res => {
           observer.next(res);
