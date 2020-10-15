@@ -2,16 +2,12 @@
 from django.contrib.auth.models import Group
 from backoffice.models import *
 from api.serializers import *
-from rest_framework.decorators import api_view
 from rest_framework import generics, permissions, viewsets
-from rest_framework.response import Response
-from rest_framework.reverse import reverse
 from django_filters.rest_framework import DjangoFilterBackend
-from oauth2_provider.contrib.rest_framework import TokenHasReadWriteScope, TokenHasScope
 
 
 class UserViewSet(viewsets.ModelViewSet):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly, TokenHasReadWriteScope]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = User.objects.all()
     serializer_class = UserSerializer
     filter_backends = (DjangoFilterBackend,)
@@ -19,7 +15,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 class GroupViewSet(viewsets.ModelViewSet):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly, TokenHasReadWriteScope]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
     filter_backends = (DjangoFilterBackend,)
@@ -27,7 +23,7 @@ class GroupViewSet(viewsets.ModelViewSet):
 
 
 class GroupMemberViewSet(viewsets.ModelViewSet):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly, TokenHasReadWriteScope]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = GroupMember.objects.all()
     serializer_class = GroupMemberSerializer
     filter_backends = (DjangoFilterBackend,)
@@ -38,7 +34,7 @@ class GroupMemberViewSet(viewsets.ModelViewSet):
 
 
 class TrainerViewSet(viewsets.ModelViewSet):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly, TokenHasReadWriteScope]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = Trainer.objects.all()
     serializer_class = TrainerSerializer
     filter_backends = (DjangoFilterBackend,)
@@ -47,7 +43,7 @@ class TrainerViewSet(viewsets.ModelViewSet):
 
 class HorseViewSet(viewsets.ModelViewSet):
 
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly, TokenHasReadWriteScope]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = Horse.objects.all()
     serializer_class = HorseSerializer
     filter_backends = (DjangoFilterBackend,)
@@ -56,7 +52,7 @@ class HorseViewSet(viewsets.ModelViewSet):
 
 class LessonViewSet(viewsets.ModelViewSet):
 
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly, TokenHasReadWriteScope]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
     filter_backends = (DjangoFilterBackend,)
