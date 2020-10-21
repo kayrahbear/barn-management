@@ -2,20 +2,22 @@
   <v-app>
     <v-app-bar app dark>
       <div class="d-flex align-center mr-2">
-        bezKoder
+        Lucky Fox Farms
       </div>
 
       <v-btn to="/horses" text>
-        Tutorials
+        Horses
       </v-btn>
 
       <v-btn to="/addLesson" text>
-        Add
+        Add Lesson
       </v-btn>
     </v-app-bar>
 
     <v-main>
-      <router-view />
+      <v-container>
+        <router-view />
+      </v-container>
     </v-main>
   </v-app>
 </template>
