@@ -37,6 +37,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
+    def __str__(self):
+        return f"{self.first_name}, {self.last_name}"
+
     class Meta:
         verbose_name = "User"
         verbose_name_plural = "Users"
@@ -75,6 +78,9 @@ class Group(models.Model):
         null=True,
         blank=True,
     )
+
+    def __str__(self):
+        return f"{self.group_id}"
 
     class Meta:
         verbose_name = "Group"
@@ -135,6 +141,9 @@ class Horse(models.Model):
         verbose_name = "Horse"
         verbose_name_plural = "Horses"
 
+    def __str__(self):
+        return f"{self.short_name} | {self.breed} {self.sex}"
+
 
 class Lesson(models.Model):
     lesson_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -172,7 +181,13 @@ class Turnout(models.Model):
 
 class SuppsMeds(models.Model):
     supp_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    horse_id = models.ForeignKey(Horse, on_delete=models.CASCADE)
     supp_name = models.CharField(
+        max_length=20,
+        null=True,
+        blank=True,
+    )
+    supp_time = models.CharField(
         max_length=8,
         null=True,
         blank=True,
@@ -187,26 +202,41 @@ class SuppsMeds(models.Model):
         verbose_name = "Supplement/Medication"
         verbose_name_plural = "Supplements/Medications"
 
+    def __str__(self):
+        return f"{self.supp_name} | {self.horse_id} {self.supp_time}"
+
 
 class Feed(models.Model):
     feed_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     horse_id = models.ForeignKey(Horse, on_delete=models.CASCADE)
-    feed_time = models.CharField(
-        max_length=2,
-    )
     grain = models.CharField(
         max_length=8,
         null=True,
         blank=True,
     )
+    secondary_grain = models.CharField(
+        max_length=8,
+        null=True,
+        blank=True,
+    )
     grain_amount = models.FloatField(null=True, blank=True)
-    supp_id = models.ForeignKey(SuppsMeds, on_delete=models.CASCADE)
-    grain = models.CharField(
+    second_grain_amount = models.FloatField(null=True, blank=True)
+    hay = models.CharField(
         max_length=100,
         null=True,
         blank=True,
     )
+    secondary_hay = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+    )
+    hay_amount = models.FloatField(null=True, blank=True)
+    second_hay_amount = models.FloatField(null=True, blank=True)
 
     class Meta:
         verbose_name = "Feed"
         verbose_name_plural = "Feeds"
+
+    def __str__(self):
+        return f"{self.horse_id}"
