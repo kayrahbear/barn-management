@@ -9,8 +9,12 @@
         Horses
       </v-btn>
 
-      <v-btn to="/addLesson" text>
-        Add Lesson
+      <v-btn to="/myProfile" text>
+        My Profile
+      </v-btn>
+
+      <v-btn to="/workingStudents" text>
+        Working Students
       </v-btn>
     </v-app-bar>
 
