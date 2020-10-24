@@ -8,6 +8,9 @@ from api.views import (
     TrainerViewSet,
     HorseViewSet,
     LessonViewSet,
+    TurnoutViewSet,
+    SuppsMedsViewSet,
+    FeedViewSet
 )
 
 router = DefaultRouter()
@@ -17,6 +20,9 @@ router.register(r"groupmembers", GroupMemberViewSet)
 router.register(r"trainers", TrainerViewSet)
 router.register(r"horses", HorseViewSet)
 router.register(r"lessons", LessonViewSet)
+router.register(r"turnouts", TurnoutViewSet)
+router.register(r"supplements", SuppsMedsViewSet)
+router.register(r"feeds", FeedViewSet)
 
 urlpatterns = [
     path("", include(router.urls)),

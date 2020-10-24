@@ -63,3 +63,37 @@ class LessonViewSet(viewsets.ModelViewSet):
         "lesson_time",
         "approved",
     )
+
+class TurnoutViewSet(viewsets.ModelViewSet):
+
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    queryset = Turnout.objects.all()
+    serializer_class = TurnoutSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_fields = (
+        "horse_id",
+        "turnout_time",
+        "weekday"
+    )
+
+class SuppsMedsViewSet(viewsets.ModelViewSet):
+
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    queryset = SuppsMeds.objects.all()
+    serializer_class = SuppsMedsSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_fields = (
+        "horse_id",
+        "supp_time",
+        "supp_name"
+    )
+
+class FeedViewSet(viewsets.ModelViewSet):
+
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    queryset = Feed.objects.all()
+    serializer_class = FeedSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_fields = (
+        "horse_id",
+    )
