@@ -2,18 +2,18 @@
   <div class="card-container">
     <v-row>
     <v-card
-      class="mx-auto"
+      class="mx-auto my-2"
       max-width="400"
       v-for="horse in horses" :key="horse.id"
     >
       <v-img
         class="white--text align-end"
-        height="200px"
+        height="500px"
+        position="top"
         :src="horse.horseImage"
       >
-        <v-card-title>{{ horse.shortName }}</v-card-title>
       </v-img>
-
+      <v-card-title>{{ horse.shortName }}</v-card-title>
       <v-card-subtitle class="pb-0">
         Stall #:
       </v-card-subtitle>
@@ -26,17 +26,16 @@
 
       <v-card-actions>
         <v-btn
-          color="orange"
-          text
+          color="brown darken-3 white--text"
+          @click="viewHorse(horse.id)"
         >
-          Share
-        </v-btn>
-
-        <v-btn
-          color="orange"
-          text
-        >
-          Explore
+          <v-icon
+            dark
+            left
+          >
+            mdi-horse
+          </v-icon>
+          View Details 
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -80,23 +79,13 @@ export default {
         });
     },
 
-    // editTutorial(id) {
-    //   this.$router.push({ name: "tutorial-details", params: { id: id } });
-    // },
-
-    // deleteTutorial(id) {
-    //   TutorialDataService.delete(id)
-    //     .then(() => {
-    //       this.refreshList();
-    //     })
-    //     .catch((e) => {
-    //       console.log(e);
-    //     });
-    // },
+    viewHorse(id) {
+      this.$router.push({ name: "horse-details", params: { id: id } });
+    },
 
     getDisplayHorse(horse) {
       return {
-        id: horse.id,
+        id: horse.horse_id,
         shortName: horse.short_name,
         breed: horse.breed,
         birthYear: horse.birth_year,
