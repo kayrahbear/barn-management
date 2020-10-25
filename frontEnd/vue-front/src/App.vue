@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar app dark>
+    <v-app-bar app dark class="brown darken-4">
       <div class="d-flex align-center mr-2">
         Lucky Fox Farms
       </div>
