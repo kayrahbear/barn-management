@@ -39,19 +39,120 @@
             Schedule</v-tab
           >
         </v-tabs>
-
-        <!-- <v-btn color="brown darken-3 white--text mx-1">
-          <v-icon dark right class="mx-1"> mdi-white-balance-sunny </v-icon>
-          AM Feed
-        </v-btn>
-        <v-btn color="brown darken-3 white--text mx-1">
-          <v-icon dark right class="mx-1"> mdi-weather-night </v-icon>
-          PM Feed
-        </v-btn>
-        <v-btn color="brown darken-3 white--text mx-1">
-          <v-icon dark right class="mx-1"> mdi-flower </v-icon>
-          Turnout Schedule
-        </v-btn> -->
+        <v-tabs-items v-model="tab">
+          <v-tab-item>
+            <v-card flat>
+              <v-simple-table class="my-3">
+                <thead>
+                  <tr>
+                    <th class="text-left">
+                      Feed
+                    </th>
+                    <th class="text-left">
+                      Amount
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{{amFeed.grain}}</td>
+                    <td>{{amFeed.grain_amount}} scoop/s</td>
+                  </tr>
+                  <tr v-if="amFeed.secondary_grain">
+                    <td>{{amFeed.secondary_grain}}</td>
+                    <td>{{amFeed.second_grain_amount}} scoop/s</td>
+                  </tr>
+                  <tr>
+                    <td>{{amFeed.hay}}</td>
+                    <td>{{amFeed.hay_amount}} flake/s</td>
+                  </tr>
+                  <tr v-if="amFeed.secondary_hay">
+                    <td>{{amFeed.secondary_hay}}</td>
+                    <td>{{amFeed.second_hay_amount}} flake/s</td>
+                  </tr>
+                </tbody>
+              </v-simple-table>
+              <hr font-weight-light>
+              <v-simple-table class="my-3">
+                <thead>
+                  <tr>
+                    <th class="text-left">
+                      Supplement/Medication
+                    </th>
+                    <th class="text-left">
+                      Amount
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                  v-for="sup in amFeed.amSups"
+                  :key=sup.supp_id
+                  >
+                  <td>{{sup.supp_name}}</td>
+                  <td>{{sup.amount}}</td>
+                  </tr>
+                </tbody>
+              </v-simple-table>
+            </v-card>
+          </v-tab-item>
+          <v-tab-item>
+            <v-card flat>
+              <v-simple-table class="my-3">
+                <thead>
+                  <tr>
+                    <th class="text-left">
+                      Feed
+                    </th>
+                    <th class="text-left">
+                      Amount
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{{amFeed.grain}}</td>
+                    <td>{{amFeed.grain_amount}} scoop/s</td>
+                  </tr>
+                  <tr v-if="amFeed.secondary_grain">
+                    <td>{{amFeed.secondary_grain}}</td>
+                    <td>{{amFeed.second_grain_amount}} scoop/s</td>
+                  </tr>
+                  <tr>
+                    <td>{{amFeed.hay}}</td>
+                    <td>{{amFeed.hay_amount}} flake/s</td>
+                  </tr>
+                  <tr v-if="amFeed.secondary_hay">
+                    <td>{{amFeed.secondary_hay}}</td>
+                    <td>{{amFeed.second_hay_amount}} flake/s</td>
+                  </tr>
+                </tbody>
+              </v-simple-table>
+              <hr font-weight-light>
+              <v-simple-table class="my-3">
+                <thead>
+                  <tr>
+                    <th class="text-left">
+                      Supplement/Medication
+                    </th>
+                    <th class="text-left">
+                      Amount
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                  v-for="sup in amFeed.pmSups"
+                  :key=sup.supp_id
+                  >
+                  <td>{{sup.supp_name}}</td>
+                  <td>{{sup.amount}}</td>
+                  </tr>
+                </tbody>
+              </v-simple-table>
+            </v-card>
+          </v-tab-item>
+        </v-tabs-items>
       </v-col>
     </v-row>
     <v-row>
@@ -120,28 +221,27 @@ export default {
       }
     },
     splitFeed(feeds, supps) {
-    var feed = feeds[0];
-    var suppList = supps;
-    var amSups = [];
-    var pmSups = [];
-    for (let index = 0; index < suppList.length; index++) {
+      var feed = feeds[0];
+      var suppList = supps;
+      var amSups = [];
+      var pmSups = [];
+      for (let index = 0; index < suppList.length; index++) {
         const supp = suppList[index];
         if (supp.supp_time.includes("AM")) {
-            amSups.push(supp)
+          amSups.push(supp);
         }
-        if(supp.supp_time.includes("PM")) {
-            pmSups.push(supp)
-        }    
-    }
-    
-    var amFeed = feed;
-    amFeed["amSups"] = amSups;
-    var pmFeed = feed;
-    pmFeed["pmSups"] = pmSups;
+        if (supp.supp_time.includes("PM")) {
+          pmSups.push(supp);
+        }
+      }
 
-    this.amFeed = amFeed;
-    this.pmFeed = pmFeed;
+      var amFeed = feed;
+      amFeed["amSups"] = amSups;
+      var pmFeed = feed;
+      pmFeed["pmSups"] = pmSups;
 
+      this.amFeed = amFeed;
+      this.pmFeed = pmFeed;
     },
   },
   mounted() {
